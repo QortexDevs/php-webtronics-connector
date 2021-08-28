@@ -8,9 +8,9 @@ $ composer require qortex/php-webtronics-connector
 
 ## Use
 
-First, obtain credentials for [Emarsys API User](https://help.emarsys.com/hc/en-us/articles/115004740329-your-account-security-settings#api-users).
+First, obtain API key for WebtronicsConnector
 
-Then, pass these credentials as username and secret to `EmarsysConnector` constructor:
+Then, pass API key to `WebtronicsConnector` constructor:
 ``` php
 use Qortex\Webtronics\Services\Connector as WebtronicsConnector;
 
