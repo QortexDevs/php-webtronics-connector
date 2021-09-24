@@ -3,6 +3,7 @@
 namespace Qortex\Webtronics\Services;
 
 use GuzzleHttp\Client;
+use stdClass;
 
 class Connector
 {
@@ -34,7 +35,7 @@ class Connector
     {
         $client = $this->prepareRequest($endpoint);
         $query['key'] = $this->apiKey;
-        $response = $client->request('GET', $endpoint . '/', ['query' => $query]);
+        $response = $client->request('GET', $endpoint, ['query' => $query]);
         return json_decode($response->getBody()->getContents());
     }
 
@@ -55,13 +56,13 @@ class Connector
     private function loadResultsFromCache(string $url, $dataType)
     {
         if (!$this->cacheResults) {
-            return '[]';
+            return new stdClass;
         }
         $cacheFileName = $this->cacheDirectory . $this->getUrlFileName($url, $dataType);
         if (file_exists($cacheFileName)) {
-            return file_get_contents($cacheFileName);
+            return json_decode(file_get_contents($cacheFileName));
         }
-        return '[]';
+        return new stdClass;
     }
 
     private  function parseResults($data)
@@ -73,10 +74,8 @@ class Connector
     {
         $tagsLoadedFromService = false;
         try {
-            $response = $this->sendGetRequest('tags/' . $this->projectId . '/', ['url' => $url]);
-            if ($response && $response->getStatusCode() === 200) {
-                $tags = $response->getBody()->getContents();
-                $this->saveResultsToCache($url, 'tags', $tags);
+            $tags = $this->sendGetRequest('tags/' . $this->projectId, ['url' => $url]);
+            if ($tags) {
                 $tagsLoadedFromService = true;
             }
         } catch (\Exception $e) {
@@ -84,6 +83,6 @@ class Connector
         if (!$tagsLoadedFromService) {
             $tags = $this->loadResultsFromCache($url, 'tags');
         }
-        return json_decode($tags, true);
+        return $tags;
     }
 }
