@@ -19,12 +19,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Qortex\\Emarsys\\": "src/"
+            "Qortex\\Webtronics\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Qortex\\Emarsys\\Tests\\": "tests/"
+            "Qortex\\Webtronics\\Tests\\": "tests/"
         }
     }
 }
