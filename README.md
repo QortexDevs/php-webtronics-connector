@@ -8,13 +8,13 @@ $ composer require qortex/php-webtronics-connector
 
 ## Use
 
-First, obtain API key for WebtronicsConnector
+First, obtain API key and Project ID for WebtronicsConnector
 
 Then, pass API key to `WebtronicsConnector` constructor:
 ``` php
 use Qortex\Webtronics\Services\Connector as WebtronicsConnector;
 
-$webtronicsConnector = new WebtronicsConnector($apiKey);
+$webtronicsConnector = new WebtronicsConnector($apiKey, $projectId);
 ```
 Last, use any of the following `WebtronicsConnector` methods to communicate with Webtronics SEO Platform:
 
