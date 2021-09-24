@@ -7,13 +7,15 @@ use GuzzleHttp\Client;
 class Connector
 {
     private string $apiKey;
+    private string $projectId;
     private string $apiUrl;
     private bool $cacheResults;
     private string $cacheDirectory;
 
-    public function __construct($apiKey, $apiUrl = null, $cacheResults = true, $cacheDirectory = '/tmp/')
+    public function __construct($apiKey, $projectId, $apiUrl = null, $cacheResults = true, $cacheDirectory = '/tmp/')
     {
         $this->apiKey = $apiKey;
+        $this->projectId = $projectId;
         $this->apiUrl = $apiUrl ?? 'https://tools.webtronics.ru/api/';
         $this->cacheResults = $cacheResults;
         $this->cacheDirectory = $cacheDirectory;
@@ -71,7 +73,7 @@ class Connector
     {
         $tagsLoadedFromService = false;
         try {
-            $response = $this->sendGetRequest('tags/6/', ['url' => $url]);
+            $response = $this->sendGetRequest('tags/' . $this->projectId . '/', ['url' => $url]);
             if ($response && $response->getStatusCode() === 200) {
                 $tags = $response->getBody()->getContents();
                 $this->saveResultsToCache($url, 'tags', $tags);
