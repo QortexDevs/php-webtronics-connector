@@ -73,7 +73,7 @@ class Connector
     {
         $tagsLoadedFromService = false;
         try {
-            $tags = $this->sendGetRequest('tags/' . $this->apiKey . '/' . $this->projectId, ['url' => $url]);
+            $tags = $this->sendGetRequest('tags/' . $this->projectId . '/' . $this->apiKey, ['url' => $url]);
             if ($tags) {
                 $tagsLoadedFromService = true;
             }
