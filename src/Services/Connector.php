@@ -17,7 +17,7 @@ class Connector
     {
         $this->apiKey = $apiKey;
         $this->projectId = $projectId;
-        $this->apiUrl = $apiUrl ?? 'https://tools.webtronics.ru/api/';
+        $this->apiUrl = $apiUrl ?? 'https://backend.webtronica.ru/';
         $this->cacheResults = $cacheResults;
         $this->cacheDirectory = $cacheDirectory;
     }
@@ -34,7 +34,6 @@ class Connector
     private function sendGetRequest($endpoint, $query = [])
     {
         $client = $this->prepareRequest($endpoint);
-        $query['key'] = $this->apiKey;
         $response = $client->request('GET', $endpoint, ['query' => $query]);
         return json_decode($response->getBody()->getContents());
     }
@@ -74,7 +73,7 @@ class Connector
     {
         $tagsLoadedFromService = false;
         try {
-            $tags = $this->sendGetRequest('tags/' . $this->projectId, ['url' => $url]);
+            $tags = $this->sendGetRequest('tags/' . $this->apiKey . '/' . $this->projectId, ['url' => $url]);
             if ($tags) {
                 $tagsLoadedFromService = true;
             }
